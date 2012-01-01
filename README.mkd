@@ -1,1 +1,9 @@
 This is the sources for my personal website.
+
+There are two repositories for this website:
+[rus.har.mn](https://github.com/eatnumber1/rus.har.mn), and
+[eatnumber1.github.com](https://github.com/eatnumber1/eatnumber1.github.com).
+eatnumber1.github.com is the jekyll generated sources for the website generated
+from rus.har.mn. It is done this way to allow for the use of jekyll plugins.
+
+vim: tw=80
