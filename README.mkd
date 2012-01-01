@@ -7,9 +7,3 @@ for the use of Jekyll plug ins.
 
 [rhm]: https://github.com/eatnumber1/rus.har.mn
 [egc]: https://github.com/eatnumber1/eatnumber1.github.com
-
-*[Jekyll]: A blog-aware, static site generator in Ruby
-
-{% comment %}
-vim: tw=80
-{% endcomment %}
