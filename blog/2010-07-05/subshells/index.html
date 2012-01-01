@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<title>Page Not Found! ← Russell Harmon</title>
+	<title>Bash Scripters: Stop using subshells to call functions. ← Machinae Elegantiam</title>
 	<meta name="author" content="Russell Harmon"/>
 
 	
@@ -24,6 +24,8 @@
 	
 
 	
+	<meta name="keywords" content="machinae"/>
+	
 
 	<meta name="description" content="The personal website and blog of Russell Harmon"/>
 
@@ -39,53 +41,58 @@
 		<div id="header">
 	<h1>
 		<span class="nav">
-			<a class="name" href="/">Russell Harmon</a>
+			<a href="/machinae" title="A programming blog">Machinae Elegantiam</a>
+			<span class="byline">← <a href="/">Russell Harmon</a></span>
 		</span>
 	</h1>
-	<ul class="nav linkhighlight">
-		<li>
-			<a class="home" href="/">Home</a>
-		</li>
-		<li>
-			<a rel="me" class="blog" href="/machinae">Blog</a>
-		</li>
-		<li>
-			<a class="resume" href="/files/resume.pdf">Resume</a>
-		</li>
-		<li>
-			<a rel="me" class="code" href="http://github.com/eatnumber1">Code</a>
-		</li>
-		<li>
-			<a rel="me" class="twitter" href="http://twitter.com/eatnumber1">Twitter</a>
-		</li>
-		<li>
-			<a rel="me" class="gplus" href="http://profiles.google.com/112862864127564162879">Google+</a>
-		</li>
-	</ul>
 </div>
-<div id="page"><h1>Page Not Found</h1>
+<div id="page"><p>When writing in bash, zsh, sh, etc&#8230; <strong>stop</strong> using subshells to call functions. There is a significant speed overhead to using a subshell and there is a much better alternative. Instead, you should just have a convention where a particular variable is always the return value of the function (I use <em>retval</em>). This has the added benefit of also allowing you to return arrays from your functions.</p>
 
-<blockquote>
-	<!-- TODO: Don't copy directly from mark.reid -->
-	<i>You step in the stream,<br/>
-	   But the water has moved on.<br/>
-	   This page is not here.
-	</i>
-</blockquote>
+<p>If you don&#8217;t know what a subshell is, a subshell is another bash shell which is spawned whenever you use <code>$()</code> or <code>` `</code> and is used to execute the code you put inside.</p>
 
-<p>Sorry, I seem to have misplaced that page...</p>
+<p>I did some simple testing to allow you to observe the overhead. For two functionally equivalent scripts:</p>
 
-<p>You could always try searching for it.</p>
+<p>This one uses a subshell:</p>
 
-<div class="sitesearch">
-  <form method="get" action="http://www.google.com/search">
-    <input type="text"   name="q" size="25" maxlength="255" value="" />
-    <input type="submit" value="Google Search" />
-    <input type="checkbox"  name="sitesearch" value="rus.har.mn" checked /> 	
-    search only this site.
-  </form>
+<p>This one uses a variable:</p>
+
+<p>The speed difference between these two is noticeable and significant.</p>
+
+<p>As you can see, when using <code>variable</code>, execution takes 0.367 seconds. <code>subshell</code> however takes a full 11.937 seconds!</p></div>
+
+<!-- Disqus comment engine -->
+<div id="disqus">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+		var disqus_shortname = 'eatnumber1';
+		
+		var disqus_identifier = '/blog/2010-07-05/subshells';
+		
+		
+
+		(function() {
+			var dsq = document.createElement('script');
+			dsq.type = 'text/javascript'; dsq.async = true;
+			dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+			(document.getElementsByTagName('head')[0] ||
+			 document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	</script>
+	<noscript>
+		Please enable JavaScript to view the
+		<a href="http://disqus.com/?ref_noscript">
+			comments powered by Disqus.
+		</a>
+	</noscript>
+	<a href="http://disqus.com" class="dsq-brlink">
+		blog comments powered by
+		<span class="logo-disqus">Disqus</span>
+	</a>
 </div>
-</div>
+
+
+
+
 
 
 

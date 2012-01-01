@@ -1,31 +1,223 @@
----
-layout: nil
----
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  
  <title>Russell Harmon</title>
- <link href="http://{{ site.domain }}/atom.xml" rel="self"/>
- <link href="http://{{ site.domain }}/"/>
- <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>http://{{ site.domain }}/</id>
+ <link href="http://rus.har.mn/atom.xml" rel="self"/>
+ <link href="http://rus.har.mn/"/>
+ <updated>2011-12-31T19:08:18-05:00</updated>
+ <id>http://rus.har.mn/</id>
  <author>
    <name>Russell Harmon</name>
    <email>russ@eatnumber1.com</email>
  </author>
 
- {% for post in site.posts %}
+ 
  <entry>
-   <title>{{ post.title }}</title>
-   <link href="http://{{ site.domain }}{{ post.url }}"/>
-   <updated>{{ post.date | date_to_xmlschema }}</updated>
+   <title>Getting Public Information From Latitude</title>
+   <link href="http://rus.har.mn/blog/2011-12-13/latitude-public-api"/>
+   <updated>2011-12-13T00:00:00-05:00</updated>
    <!-- RFC 4151 compliant tag -->
-   <id>tag:{{ site.domain }},{{ post.date | date: "%Y-%m-%d" }}:{{ post.id | replace: "#", "/" }}</id>
-   {% for category in post.categories %}
-   <category scheme="http://{{ site.domain }}/tag" term="{{ category }}"/>
-   {% endfor %}
-   <content type="html">{{ post.content | xml_escape }}</content>
+   <id>tag:rus.har.mn,2011-12-13:/blog/2011-12-13/latitude-public-api</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;In making this website, I wanted to put on my &lt;a href='/#latitude'&gt;homepage&lt;/a&gt; my Google Latitude determined current location (at the statewide level). Google provides the &lt;a href='http://code.google.com/apis/latitude/'&gt;Latitude &lt;abbr title='Application Programming Interface'&gt;API&lt;/abbr&gt;&lt;/a&gt;, but this is only for authenticated users, and therefore cannot be used by people wishing to publicly publish their location.&lt;/p&gt;
+
+&lt;p&gt;The Latitude website provides a location widget that can be placed on your website to show your current location, but it uses an undocumented &lt;abbr title='Application Programming Interface'&gt;API&lt;/abbr&gt;. After a bit of effort reverse engineering the location widget, I eventually came up with the following &lt;abbr title='Uniform Resource Locator'&gt;URL&lt;/abbr&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;http://www.google.com/latitude/apps/badge/api?user=4048757213362106746&amp;amp;type=json&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is an undocumented &lt;abbr title='Application Programming Interface'&gt;API&lt;/abbr&gt; by Google, and notably cannot use &lt;abbr title='JavaScript Object Notation'&gt;JSON&lt;/abbr&gt;P. That means that I couldn&amp;#8217;t use that &lt;abbr title='Uniform Resource Locator'&gt;URL&lt;/abbr&gt; directly from within my static-page &lt;abbr title='A blog-aware, static site generator in Ruby'&gt;Jekyll&lt;/abbr&gt;-generated website thanks to the &lt;a href='http://en.wikipedia.org/wiki/Same-origin_policy'&gt;same origin policy&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In order to work around this rather severe limitation, I leveraged the power of &lt;a href='http://en.wikipedia.org/wiki/Yahoo!_query_language'&gt;&lt;abbr title='Yahoo! query language'&gt;YQL&lt;/abbr&gt;&lt;/a&gt;, which is able to effectively turn a &lt;abbr title='JavaScript Object Notation'&gt;JSON&lt;/abbr&gt;-only data source into a JSONP data source. At the end of the day, I&amp;#8217;m able to retrieve my current location from Latitude by going through Yahoo with the following code:&lt;/p&gt;</content>
  </entry>
- {% endfor %}
+ 
+ <entry>
+   <title>Determining Mount Status</title>
+   <link href="http://rus.har.mn/blog/2011-06-24/getmntinfo"/>
+   <updated>2011-06-24T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2011-06-24:/blog/2011-06-24/getmntinfo</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;I&amp;#8217;ve fairly frequently ran into the issue while scripting a mount action of determining if what I want to mount is already mounted. On Linux, you could parse &lt;code&gt;/proc/mounts&lt;/code&gt;, but that&amp;#8217;s neither cross-platform, nor is the format of &lt;code&gt;/proc/mounts&lt;/code&gt; guaranteed not to change. The same problem exists with parsing the output of the &lt;code&gt;mount&lt;/code&gt; command, the format of which not only is not guaranteed to remain the same, it in fact varies greatly between platforms.&lt;/p&gt;
+
+&lt;p&gt;To tackle this problem, I looked into how &lt;code&gt;mount&lt;/code&gt; gets it&amp;#8217;s information. On BSD and friends, it uses a function called &lt;a href='http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man3/getmntinfo.3.html'&gt;&lt;code&gt;getmntinfo(3)&lt;/code&gt;&lt;/a&gt;. On Linux, it uses a function called &lt;a href='http://linux.die.net/man/3/getmntent'&gt;&lt;code&gt;getmntent(3)&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now that I knew how the different UNIXes that I cared to support got their mount information, I wrote up a program to retrieve and format this mount information.&lt;/p&gt;
+
+&lt;p&gt;Know that currently, I only support OS X, but I plan on supporting more operating systems in the future.&lt;/p&gt;
+
+&lt;p&gt;You can find the sources for my program on my &lt;a href='http://github.com/eatnumber1/getmntinfo'&gt;GitHub page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Usage: getmntinfo [options] [format]
+  -q, --quiet                  Produce no output
+  -h, --help                   This help message
+  -B, --bsize=SIZE             Fundamental filesystem block size
+  -I, --iosize=SIZE            Optimal transfer block size
+  -b, --blocks=COUNT           Total data blocks in filesystem
+  -F, --bfree=COUNT            Free blocks in filesystem
+  -a, --bavail=COUNT           Free blocks avail to non-superuser
+  -n, --files=COUNT            Total file nodes in filesystem
+  -e, --ffree=COUNT            Free file nodes in filesystem
+  -U, --fsid=ID                Filesystem identifier
+  -S, --fsid0=ID               Top four bytes of filesystem identifier
+  -T, --fsid1=ID               Bottom four bytes of filesystem identifier
+  -O, --owner=USER             User that mounted the filesystem
+  -g, --flags=FLAGS            Copy of mount exported flags
+  -s, --fssubtype=TYPE         Filesystem sub-type (flavor)
+  -t, --type=TYPE              Type of filesystem
+  -o, --mntonname=DIR          Directory on which mounted
+  -f, --mntfromname=NAME       Mounted filesystem&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With this program, determining if something is mounted in a script is as simple as&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Jekyll at Barcamp</title>
+   <link href="http://rus.har.mn/blog/2011-02-19/jekyll-at-barcamp"/>
+   <updated>2011-02-19T00:00:00-05:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2011-02-19:/blog/2011-02-19/jekyll-at-barcamp</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;This is an example post I&amp;#8217;ve made for my presentation at &lt;a href='http://barcamp.org/'&gt;Barcamp&lt;/a&gt;. What follows is an example &lt;em&gt;hello world&lt;/em&gt; program.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>New Blog</title>
+   <link href="http://rus.har.mn/blog/2011-02-06/new-blog"/>
+   <updated>2011-02-06T00:00:00-05:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2011-02-06:/blog/2011-02-06/new-blog</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;I decided to throw out my old blog and build a new one that uses Github&amp;#8217;s &lt;a href='http://pages.github.com/'&gt;pages&lt;/a&gt;. I have migrated the posts which I found to be particularly interesting, but the complete old blog can be found on &lt;a href='http://eatnumber1.blogspot.com/'&gt;Blogger&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This new blog is pretty cool because it uses &lt;a href='https://github.com/mojombo/jekyll/'&gt;Jekyll&lt;/a&gt; to generate static html pages for the site. Jekyll is an interesting take on web sites. I don&amp;#8217;t know if it is a new idea, but it is new to me. What Jekyll does is statically generate html pages using the &lt;a href='https://github.com/tobi/liquid'&gt;Liquid&lt;/a&gt; templating engine. I&amp;#8217;ve found that for all of the common services for which you would want some code running on the backend, there is a web service that can do it for you, and all you have to do is throw some javascript in to the page. One example is &lt;a href='http://disqus.com/'&gt;Disqus&lt;/a&gt; which I am using to support commenting on blog posts.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Object Oriented C</title>
+   <link href="http://rus.har.mn/blog/2010-10-01/object-oriented-c"/>
+   <updated>2010-10-01T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2010-10-01:/blog/2010-10-01/object-oriented-c</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;So, thanks to &lt;a href='http://thirdcog.eu/pwcblocks/'&gt;blocks&lt;/a&gt;, Apple&amp;#8217;s new extension to C, you can now do basic object-orientation. Have a look over at &lt;a href='http://gist.github.com/605457'&gt;GitHub&lt;/a&gt; for a short example on how to do it.&lt;/p&gt;
+
+&lt;p&gt;To break it down, an object is a struct, which contains both fields and &lt;a href='http://thirdcog.eu/pwcblocks/'&gt;blocks&lt;/a&gt; which act as the object&amp;#8217;s methods.&lt;/p&gt;
+
+&lt;p&gt;This creates a &lt;code&gt;String&lt;/code&gt; object which inherits from &lt;code&gt;Object&lt;/code&gt; and has a field &lt;code&gt;_value&lt;/code&gt;, and methods &lt;code&gt;getValue&lt;/code&gt; and &lt;code&gt;setValue&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;More to come&amp;#8230; &lt;em&gt;maybe&lt;/em&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Bash Scripters: Stop using subshells to call functions.</title>
+   <link href="http://rus.har.mn/blog/2010-07-05/subshells"/>
+   <updated>2010-07-05T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2010-07-05:/blog/2010-07-05/subshells</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;When writing in bash, zsh, sh, etc&amp;#8230; &lt;strong&gt;stop&lt;/strong&gt; using subshells to call functions. There is a significant speed overhead to using a subshell and there is a much better alternative. Instead, you should just have a convention where a particular variable is always the return value of the function (I use &lt;em&gt;retval&lt;/em&gt;). This has the added benefit of also allowing you to return arrays from your functions.&lt;/p&gt;
+
+&lt;p&gt;If you don&amp;#8217;t know what a subshell is, a subshell is another bash shell which is spawned whenever you use &lt;code&gt;$()&lt;/code&gt; or &lt;code&gt;` `&lt;/code&gt; and is used to execute the code you put inside.&lt;/p&gt;
+
+&lt;p&gt;I did some simple testing to allow you to observe the overhead. For two functionally equivalent scripts:&lt;/p&gt;
+
+&lt;p&gt;This one uses a subshell:&lt;/p&gt;
+
+&lt;p&gt;This one uses a variable:&lt;/p&gt;
+
+&lt;p&gt;The speed difference between these two is noticeable and significant.&lt;/p&gt;
+
+&lt;p&gt;As you can see, when using &lt;code&gt;variable&lt;/code&gt;, execution takes 0.367 seconds. &lt;code&gt;subshell&lt;/code&gt; however takes a full 11.937 seconds!&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Reclaimable Userspace Cache Memory</title>
+   <link href="http://rus.har.mn/blog/2010-05-24/reclaimable-userspace-cache"/>
+   <updated>2010-05-24T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2010-05-24:/blog/2010-05-24/reclaimable-userspace-cache</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;Caches are used all over your computer and for a huge variety of purposes. From apache to your physical CPU, cache is everywhere. Normally, when you want to cache something in memory, you &lt;code&gt;malloc(3)&lt;/code&gt; a chunk of memory, and store data in that. This works well in the small scale, but when you and 30+ others want to cache some information, that can quickly turn into a large amount of memory taken up by information which can be (easily, or not so easily) regenerated, and there is no way for the operating system to reclaim that memory when it really needs it.&lt;/p&gt;
+
+&lt;p&gt;In Java, that&amp;#8217;s not the case. In Java, you can create &lt;a href='http://java.sun.com/javase/6/docs/api/java/lang/ref/SoftReference.html'&gt;SoftReference&lt;/a&gt; objects which are collected by the garbage collector when the VM is running out of memory. This exact idea is what I&amp;#8217;d like to see in an operating system.&lt;/p&gt;
+
+&lt;p&gt;I propose a system, whereby you can allocate memory which the operating system can reclaim at it&amp;#8217;s own discretion. This would work by using &lt;code&gt;malloc(3)&lt;/code&gt; to get some memory, then using &lt;code&gt;madvise(2)&lt;/code&gt; to advise to the kernel that this is reclaimable memory. Then, before you read or write to the memory, you lock the memory (for read or write) using reclock, during which time the kernel guarantees not to reclaim the memory. Then, when you are done reading / writing to that memory, recunlock it.&lt;/p&gt;
+
+&lt;p&gt;The function prototypes for the reclock and recunlock functions (which don&amp;#8217;t exist) would be:&lt;/p&gt;
+
+&lt;p&gt;Under the hood, what would happen is that when you &lt;code&gt;madvise(2)&lt;/code&gt; the kernel that a particular space is reclaimable, it would add it to a list of reclaimable addresses. Then, when the system is low on memory, it would scan the list for a chunk of memory large enough, check that the memory isn&amp;#8217;t locked (read next paragraph), mark that element in the list as reclaimed and with the pid that it was taken from, and give it to someone else.&lt;/p&gt;
+
+&lt;p&gt;Before simply giving a chunk of memory to someone else however, the kernel has to check to see if the memory is in use. In order to do that, there has to be a lock bit somewhere. I had originally thought to put it in the kernel&amp;#8217;s memory, but &lt;a href='http://www.clockfort.com'&gt;Clockfort&lt;/a&gt; noted that locking and unlocking would require a system call, which would be quite slow. Therefore, the bit can be kept in the processes memory space, and simply read by the kernel before reclaiming memory. That way, reclock and recunlock can be implemented entirely without syscalls.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Pure Bash Cat</title>
+   <link href="http://rus.har.mn/blog/2009-05-28/pure-bash-cat"/>
+   <updated>2009-05-28T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2009-05-28:/blog/2009-05-28/pure-bash-cat</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;So just to see if I could, I wrote a version of cat using pure bash. Pure bash is a bash script which uses nothing but bash builtins to accomplish it&amp;#8217;s goal. To determine if a particular command is a builtin, you can use the command type -t &amp;#8220;command&amp;#8221; (the command type, is itself a builtin). Some notable commands which are builtins include echo, read, exec, return. Some notable commands which are not builtins include cat and grep. As follows is my implementation of cat in pure bash.&lt;/p&gt;
+
+&lt;p&gt;Now, keep reading if you want a small lesson in advanced bash. I&amp;#8217;ll go line by line to explain what this is doing.&lt;/p&gt;
+
+&lt;p&gt;Line 1 is the &lt;a href='http://en.wikipedia.org/wiki/Shebang_%28Unix%29'&gt;shebang&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Line 2 assigns the array variable INPUTS either the arguments provided on the command line if they exist, or the single character &lt;code&gt;-&lt;/code&gt;. The way this happens is as follows: &lt;code&gt;$@&lt;/code&gt; is the variable to reference the &lt;em&gt;positional parameters&lt;/em&gt; (the arguments to your program). If you have not heard of &lt;code&gt;$*&lt;/code&gt;, read &lt;a href='http://bash-hackers.org/wiki/doku.php/scripting/posparams#mass_usage'&gt;this&lt;/a&gt;. The way I reference the positional parameters is like &lt;code&gt;${@}&lt;/code&gt;. That&amp;#8217;s because the brackets allow me to add a &lt;em&gt;default value&lt;/em&gt; to the variable. A &lt;em&gt;default value&lt;/em&gt; is the value that the variable will seem to have if the variable is not set. The way to use a &lt;em&gt;default value&lt;/em&gt; is with the &lt;code&gt;:-&lt;/code&gt;, like so: &lt;code&gt;${@:-&amp;quot;hello&amp;quot;}&lt;/code&gt;. So if &lt;code&gt;$@&lt;/code&gt; is not set, it will seem to have the value &lt;code&gt;&amp;quot;hello&amp;quot;&lt;/code&gt;. You will then notice that is all enclosed in &lt;code&gt;()&lt;/code&gt;. That makes an array out of the &lt;em&gt;positional parameters&lt;/em&gt; (the first argument to the program becomes the first element in the array, the second argument becomes the second element, etc.).&lt;/p&gt;
+
+&lt;p&gt;Line 3 begins a &lt;code&gt;for&lt;/code&gt; loop which will assign to &lt;code&gt;i&lt;/code&gt; each value stored in the array &lt;code&gt;INPUTS&lt;/code&gt; which was discussed earlier. The &lt;code&gt;@&lt;/code&gt; index used is the same for arrays as &lt;code&gt;$@&lt;/code&gt; is for the &lt;em&gt;positional parameters&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Maybe I&amp;#8217;ll explain more when I&amp;#8217;m less lazy.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Negative Indexed Arrays</title>
+   <link href="http://rus.har.mn/blog/2008-08-14/negative-indexed-arrays"/>
+   <updated>2008-08-14T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2008-08-14:/blog/2008-08-14/negative-indexed-arrays</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;In first describing how ridiculous C and C++ was to my class when I was in my first C++ programming course, I remember him saying that you can even create negative indexed arrays. Now that I am a bit wiser in the ways of C++ and memory management, I actually know how to do it!&lt;/p&gt;
+
+&lt;p&gt;The following small C++ program illustrates:&lt;/p&gt;
+
+&lt;p&gt;When executed, it gives us this:&lt;/p&gt;
+
+&lt;p&gt;The reason this happens is that since arrays in C and C++ are linear in memory, you can do math on them (the &lt;code&gt;++array&lt;/code&gt; and &lt;code&gt;--array&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;So if the array looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; 0xFADC  0xFADD  &amp;lt;-- This is the address
+-----------------
+| Hello | World |
+-----------------&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you printed your array (without an index), you would see &lt;code&gt;0xFADC&lt;/code&gt;; the address of the first element. Therefore if you add one to that, your array&amp;#8217;s element &lt;code&gt;0&lt;/code&gt; would point at memory address &lt;code&gt;0xFADD&lt;/code&gt;, and it&amp;#8217;s element &lt;code&gt;-1&lt;/code&gt; would point at memory address &lt;code&gt;0xFADC&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Remember&lt;/em&gt;, don&amp;#8217;t try to &lt;code&gt;delete&lt;/code&gt; an array like this before restoring it to the way it originally was or you will get a segfault.&lt;/p&gt;
+
+&lt;p&gt;A shorter way of doing it that doesn&amp;#8217;t involve using &lt;code&gt;new&lt;/code&gt; is:&lt;/p&gt;
+
+&lt;p&gt;A probably more readable way to do it in C is as follows:&lt;/p&gt;</content>
+ </entry>
+ 
  
 </feed>

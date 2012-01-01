@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Reclaimable Userspace Cache Memory ← Machinae Elegantiam</title>
+	<meta name="author" content="Russell Harmon"/>
+
+	
+
+	<link rel="stylesheet" href="/css/reset.css" type="text/css"/>
+	<link rel="stylesheet" href="/css/screen.css" type="text/css"/>
+	<link rel="stylesheet" href="/css/960.css" type="text/css"/>
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat:regular"/>
+
+	
+
+	
+
+	
+
+	
+
+	
+	<meta name="keywords" content="machinae"/>
+	
+
+	<meta name="description" content="The personal website and blog of Russell Harmon"/>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/gabrielfalcao/jquery-yql/master/jquery.yql.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/rmm5t/jquery-timeago/master/jquery.timeago.js"></script>
+
+	
+	
+</head>
+<body id="">
+	<div id="site">
+		<div id="header">
+	<h1>
+		<span class="nav">
+			<a href="/machinae" title="A programming blog">Machinae Elegantiam</a>
+			<span class="byline">← <a href="/">Russell Harmon</a></span>
+		</span>
+	</h1>
+</div>
+<div id="page"><p>Caches are used all over your computer and for a huge variety of purposes. From apache to your physical CPU, cache is everywhere. Normally, when you want to cache something in memory, you <code>malloc(3)</code> a chunk of memory, and store data in that. This works well in the small scale, but when you and 30+ others want to cache some information, that can quickly turn into a large amount of memory taken up by information which can be (easily, or not so easily) regenerated, and there is no way for the operating system to reclaim that memory when it really needs it.</p>
+
+<p>In Java, that&#8217;s not the case. In Java, you can create <a href='http://java.sun.com/javase/6/docs/api/java/lang/ref/SoftReference.html'>SoftReference</a> objects which are collected by the garbage collector when the VM is running out of memory. This exact idea is what I&#8217;d like to see in an operating system.</p>
+
+<p>I propose a system, whereby you can allocate memory which the operating system can reclaim at it&#8217;s own discretion. This would work by using <code>malloc(3)</code> to get some memory, then using <code>madvise(2)</code> to advise to the kernel that this is reclaimable memory. Then, before you read or write to the memory, you lock the memory (for read or write) using reclock, during which time the kernel guarantees not to reclaim the memory. Then, when you are done reading / writing to that memory, recunlock it.</p>
+
+<p>The function prototypes for the reclock and recunlock functions (which don&#8217;t exist) would be:</p>
+
+<p>Under the hood, what would happen is that when you <code>madvise(2)</code> the kernel that a particular space is reclaimable, it would add it to a list of reclaimable addresses. Then, when the system is low on memory, it would scan the list for a chunk of memory large enough, check that the memory isn&#8217;t locked (read next paragraph), mark that element in the list as reclaimed and with the pid that it was taken from, and give it to someone else.</p>
+
+<p>Before simply giving a chunk of memory to someone else however, the kernel has to check to see if the memory is in use. In order to do that, there has to be a lock bit somewhere. I had originally thought to put it in the kernel&#8217;s memory, but <a href='http://www.clockfort.com'>Clockfort</a> noted that locking and unlocking would require a system call, which would be quite slow. Therefore, the bit can be kept in the processes memory space, and simply read by the kernel before reclaiming memory. That way, reclock and recunlock can be implemented entirely without syscalls.</p></div>
+
+<!-- Disqus comment engine -->
+<div id="disqus">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+		var disqus_shortname = 'eatnumber1';
+		
+		var disqus_identifier = '/blog/2010-05-24/reclaimable-userspace-cache';
+		
+		
+
+		(function() {
+			var dsq = document.createElement('script');
+			dsq.type = 'text/javascript'; dsq.async = true;
+			dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+			(document.getElementsByTagName('head')[0] ||
+			 document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	</script>
+	<noscript>
+		Please enable JavaScript to view the
+		<a href="http://disqus.com/?ref_noscript">
+			comments powered by Disqus.
+		</a>
+	</noscript>
+	<a href="http://disqus.com" class="dsq-brlink">
+		blog comments powered by
+		<span class="logo-disqus">Disqus</span>
+	</a>
+</div>
+
+
+
+
+
+
+
+		<div id="footer">
+			<address>
+				<span class="copyright">
+					Content by <a rel="author" href="/">Russell Harmon</a>.
+					Design by <a href="http://mark.reid.name/info/site.html">Mark Reid</a>
+					<br/>
+					(<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+				</span>
+				<span class="engine">
+					Powered by <a href="http://jekyllrb.com/" title="A static, minimalist CMS">Jekyll</a>.
+					Hosted by <a href="http://pages.github.com/">GitHub</a>.
+				</span>
+			<address>
+		</div>
+	</div>
+
+	
+	<!-- Google Analytics -->
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-10349264-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	
+</body>
+</html>
+
+

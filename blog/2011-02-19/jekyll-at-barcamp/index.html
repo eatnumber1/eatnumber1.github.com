@@ -3,12 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<title>{{ page.title }} ← {{ page.top }}</title>
+	<title>Jekyll at Barcamp ← Machinae Elegantiam</title>
 	<meta name="author" content="Russell Harmon"/>
 
-	{% if page.feed %}
-	<link rel="alternate" href="{{ page.feed }}" title="Atom Feed" type="application/atom+xml"/>
-	{% endif %}
+	
 
 	<link rel="stylesheet" href="/css/reset.css" type="text/css"/>
 	<link rel="stylesheet" href="/css/screen.css" type="text/css"/>
@@ -17,40 +15,75 @@
 
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat:regular"/>
 
-	{% for link in site.link %}
-	<link rel="{{ link.rel }}" href="{{ link.href }}"{% if link.type %} type="{{ link.type }}"{% endif %}/>
-	{% endfor %}
+	
 
-	{% for link in page.link %}
-	<link rel="{{ link.rel }}" href="{{ link.href }}"{% if link.type %} type="{{ link.type }}"{% endif %}/>
-	{% endfor %}
+	
 
-	{% for meta in site.meta %}
-	<meta name="{{ meta.name }}" content="{{ meta.content }}"/>
-	{% endfor %}
+	
 
-	{% for meta in page.meta %}
-	<meta name="{{ meta.name }}" content="{{ meta.content }}"/>
-	{% endfor %}
+	
 
-	{% if page.categories and page.categories != empty %}
-	<meta name="keywords" content="{{ page.categories | join:',' }}"/>
-	{% endif %}
+	
+	<meta name="keywords" content="machinae"/>
+	
 
-	<meta name="description" content="{% if page.excerpt %}{{ page.excerpt }}{% else %}{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}{% endif %}"/>
+	<meta name="description" content="The personal website and blog of Russell Harmon"/>
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 	<script type="text/javascript" src="https://raw.github.com/gabrielfalcao/jquery-yql/master/jquery.yql.js"></script>
 	<script type="text/javascript" src="https://raw.github.com/rmm5t/jquery-timeago/master/jquery.timeago.js"></script>
 
-	{% comment %}Hopefully a good guess of if the site is published.{% endcomment %}
-	{% if site.safe %}
-	<base href="http://{{ site.domain }}" target="_self"/>
-	{% endif %}
+	
+	
 </head>
-<body id="{{ page.section }}">
+<body id="">
 	<div id="site">
-		{{ content }}
+		<div id="header">
+	<h1>
+		<span class="nav">
+			<a href="/machinae" title="A programming blog">Machinae Elegantiam</a>
+			<span class="byline">← <a href="/">Russell Harmon</a></span>
+		</span>
+	</h1>
+</div>
+<div id="page"><p>This is an example post I&#8217;ve made for my presentation at <a href='http://barcamp.org/'>Barcamp</a>. What follows is an example <em>hello world</em> program.</p></div>
+
+<!-- Disqus comment engine -->
+<div id="disqus">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+		var disqus_shortname = 'eatnumber1';
+		
+		var disqus_identifier = '/blog/2011-02-19/jekyll-at-barcamp';
+		
+		
+
+		(function() {
+			var dsq = document.createElement('script');
+			dsq.type = 'text/javascript'; dsq.async = true;
+			dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+			(document.getElementsByTagName('head')[0] ||
+			 document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	</script>
+	<noscript>
+		Please enable JavaScript to view the
+		<a href="http://disqus.com/?ref_noscript">
+			comments powered by Disqus.
+		</a>
+	</noscript>
+	<a href="http://disqus.com" class="dsq-brlink">
+		blog comments powered by
+		<span class="logo-disqus">Disqus</span>
+	</a>
+</div>
+
+
+
+
+
+
+
 		<div id="footer">
 			<address>
 				<span class="copyright">
@@ -67,11 +100,11 @@
 		</div>
 	</div>
 
-	{% unless site.google_analytics_id == null %}
+	
 	<!-- Google Analytics -->
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', '{{ site.google_analytics_id }}']);
+		_gaq.push(['_setAccount', 'UA-10349264-2']);
 		_gaq.push(['_trackPageview']);
 
 		(function() {
@@ -80,10 +113,8 @@
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
 	</script>
-	{% endunless %}
+	
 </body>
 </html>
 
-{% comment %}
-vim: ft=liquid sw=4 ts=4 sts=4
-{% endcomment %}
+
