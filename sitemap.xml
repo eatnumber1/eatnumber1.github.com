@@ -2,25 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
       <loc>http://rus.har.mn/404.html</loc>
-      <lastmod>2011-12-18</lastmod>
-  </url>
-  <url>
-      <loc>http://rus.har.mn/index.markdown</loc>
-      <lastmod>2011-12-29</lastmod>
-      <changefreq>always</changefreq>
-  </url>
-  <url>
-      <loc>http://rus.har.mn/machinae/atom.xml</loc>
-      <lastmod>2011-12-18</lastmod>
+      <lastmod>2011-12-30</lastmod>
   </url>
   <url>
       <loc>http://rus.har.mn/machinae/index.markdown</loc>
-      <lastmod>2011-12-18</lastmod>
+      <lastmod>2011-12-30</lastmod>
   </url>
   <url>
-      <loc>http://rus.har.mn/blog/2011-12-19/number-to-words</loc>
-      <lastmod>2011-12-19</lastmod>
-      <changefreq>never</changefreq>
+      <loc>http://rus.har.mn/machinae/atom.xml</loc>
+      <lastmod>2011-12-30</lastmod>
+  </url>
+  <url>
+      <loc>http://rus.har.mn/index.markdown</loc>
+      <lastmod>2011-12-30</lastmod>
+      <changefreq>always</changefreq>
   </url>
   <url>
       <loc>http://rus.har.mn/blog/2011-12-13/latitude-public-api</loc>
