@@ -136,7 +136,13 @@
 <!-- Github recent projects -->
 <script type="text/javascript" charset="UTF-8" src="/js/github.js"></script>
 <script type="text/javascript">
-	github_latest(5, "eatnumber1", $("#github_eatnumber1"));
+	var github_excludes = new Array();
+	
+	
+	github_excludes.push("eatnumber1.github.com");
+	
+	
+	github_latest(5, "eatnumber1", $("#github_eatnumber1"), github_excludes);
 </script>
 
 <!-- Twitter timeline -->
