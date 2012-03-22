@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Projects ← MS Project/Thesis Seminar</title>
+	<meta name="author" content="Russell Harmon"/>
+
+	
+
+	<link rel="stylesheet" href="/css/reset.css" type="text/css"/>
+	<link rel="stylesheet" href="/css/screen.css" type="text/css"/>
+	<link rel="stylesheet" href="/css/960.css" type="text/css"/>
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css"/>
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat:regular"/>
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	<meta name="description" content="The personal website and blog of Russell Harmon"/>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/gabrielfalcao/jquery-yql/master/jquery.yql.js"></script>
+	<script type="text/javascript" src="https://raw.github.com/rmm5t/jquery-timeago/master/jquery.timeago.js"></script>
+
+	
+	
+</head>
+<body id="Projects">
+	<div id="site">
+		<div id="header">
+	<h1>
+		<span class="nav">
+			<a href="/thesis" title="Seminar Class Work">MS Project/Thesis Seminar</a>
+			<span class="byline">← <a href="/">Russell Harmon</a></span>
+		</span>
+	</h1>
+	<ul class="nav linkhighlight">
+		<li>
+			<a class="projects" href="/thesis/projects">Projects</a>
+		</li>
+	</ul>
+</div>
+<div id="page"><p>This page details thoughts I&#8217;ve had for potential thesis/project topics.</p>
+<div class='maruku_toc'><ul style='list-style: none;'><li><a href='#graphing_nondeterminism'>Graphing Non-Determinism</a></li><li><a href='#probabilistic_nondeterminism_elimination'>Probabilistic Non-Determinism Elimination</a></li><li><a href='#reclaimable_anonymous_cache_memory_in_linux'>Reclaimable anonymous cache memory in Linux</a></li><li><a href='#redesigning_the_build_system'>Re-designing the build system</a></li><li><a href='#llvm_language_agnostic_introspection'>LLVM Language &#8220;agnostic&#8221; Introspection</a></li></ul></div>
+<h1 id='graphing_nondeterminism'>Graphing Non-Determinism</h1>
+
+<p>Optimization in the compiler is a hard problem, and frequently considered a black magic. Those intimately familiar with the architecture which they are developing for will frequently find potential optimizations while examining the compiler output which the compiler was not able to perform.</p>
+
+<p>In theory, all code which produces no non-deterministic side-effects, and handles no non-deterministic data can be optimally optimized. In order to better understand what kinds of optimizations can be performed, I wish to perform a similar operation to what optimizers do when performing constant inlining and starting from a set of implicitly non-deterministic functions, graph the &#8220;pollution&#8221; of the otherwise deterministic code. Theoretically, all other code should be able to be optimally optimized.</p>
+
+<h1 id='probabilistic_nondeterminism_elimination'>Probabilistic Non-Determinism Elimination</h1>
+
+<p>It can be determined that some non-deterministic variables will &#8220;probably&#8221; take a value. Assuming a finite set of probable values, an optimizing compiler can create multiple code paths, assuming one of those probable values for each code path.</p>
+
+<p>The following code would become optimizable if my proposed changes were introduced.</p>
+
+<h1 id='reclaimable_anonymous_cache_memory_in_linux'>Reclaimable anonymous cache memory in Linux</h1>
+
+<p>There are many programs today which generate &#8220;cached&#8221; values, which while regeneratable, are expensive to do. When the system is memory constrained however, it is frequently desirable to dump those caches so execution may continue. I would like to add a facility to Linux whereby specific memory regions may be marked as &#8220;reclaimable,&#8221; allowing the kernel to reclaim and reuse that memory when under heavy load.</p>
+
+<h1 id='redesigning_the_build_system'>Re-designing the build system</h1>
+
+<p>Coming soon&#8230;</p>
+
+<h1 id='llvm_language_agnostic_introspection'>LLVM Language &#8220;agnostic&#8221; Introspection</h1>
+
+<p>Coming soon&#8230;</p></div>
+
+
+
+		<div id="footer">
+			<address>
+				<span class="copyright">
+					Content by <a rel="author" href="/">Russell Harmon</a>.
+					Design by <a href="http://mark.reid.name/info/site.html">Mark Reid</a>
+					<br/>
+					(<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Some rights reserved</a>)
+				</span>
+				<span class="engine">
+					Powered by <a href="http://jekyllrb.com/" title="A static, minimalist CMS">Jekyll</a>.
+					Hosted by <a href="http://pages.github.com/">GitHub</a>.
+				</span>
+			<address>
+		</div>
+	</div>
+
+	
+	<!-- Google Analytics -->
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-10349264-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	
+</body>
+</html>
+
+
