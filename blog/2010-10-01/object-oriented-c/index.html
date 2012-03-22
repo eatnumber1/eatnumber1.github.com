@@ -49,7 +49,14 @@
 <div id="page"><p>So, thanks to <a href='http://thirdcog.eu/pwcblocks/'>blocks</a>, Apple&#8217;s new extension to C, you can now do basic object-orientation. Have a look over at <a href='http://gist.github.com/605457'>GitHub</a> for a short example on how to do it.</p>
 
 <p>To break it down, an object is a struct, which contains both fields and <a href='http://thirdcog.eu/pwcblocks/'>blocks</a> which act as the object&#8217;s methods.</p>
-
+<div class='highlight'><pre><code class='c'><span class='k'>typedef</span> <span class='k'>struct</span> <span class='p'>{</span>
+	<span class='n'>Object</span> <span class='n'>super</span><span class='p'>;</span>
+	<span class='kt'>char</span> <span class='o'>*</span><span class='n'>_value</span><span class='p'>;</span>
+	<span class='k'>const</span> <span class='kt'>char</span> <span class='o'>*</span><span class='p'>(</span><span class='o'>^</span><span class='n'>getValue</span><span class='p'>)();</span>
+	<span class='kt'>void</span> <span class='p'>(</span><span class='o'>^</span><span class='n'>setValue</span><span class='p'>)(</span> <span class='k'>const</span> <span class='kt'>char</span> <span class='o'>*</span> <span class='p'>);</span>
+<span class='p'>}</span> <span class='n'>String</span><span class='p'>;</span>
+</code></pre>
+</div>
 <p>This creates a <code>String</code> object which inherits from <code>Object</code> and has a field <code>_value</code>, and methods <code>getValue</code> and <code>setValue</code>.</p>
 
 <p>More to come&#8230; <em>maybe</em>.</p></div>

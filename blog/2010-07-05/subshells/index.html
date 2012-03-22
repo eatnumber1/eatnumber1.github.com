@@ -53,11 +53,44 @@
 <p>I did some simple testing to allow you to observe the overhead. For two functionally equivalent scripts:</p>
 
 <p>This one uses a subshell:</p>
-
+<div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/bash</span>
+<span class='k'>function </span>a<span class='o'>()</span> <span class='o'>{</span>
+    <span class='nb'>echo </span>hello
+<span class='o'>}</span>
+<span class='k'>for</span> <span class='o'>((</span> <span class='nv'>i</span> <span class='o'>=</span> 0; i &lt; 10000; i++ <span class='o'>))</span>; <span class='k'>do</span>
+<span class='k'>    </span><span class='nb'>echo</span> <span class='s2'>&quot;$(a)&quot;</span>
+<span class='k'>done</span>
+</code></pre>
+</div>
 <p>This one uses a variable:</p>
-
+<div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/bash</span>
+<span class='k'>function </span>a<span class='o'>()</span> <span class='o'>{</span>
+    <span class='nv'>retval</span><span class='o'>=</span><span class='s2'>&quot;hello&quot;</span>
+<span class='o'>}</span>
+<span class='k'>for</span> <span class='o'>((</span> <span class='nv'>i</span> <span class='o'>=</span> 0; i &lt; 10000; i++ <span class='o'>))</span>; <span class='k'>do</span>
+<span class='k'>    </span>a
+    <span class='nb'>echo</span> <span class='s2'>&quot;$retval&quot;</span>
+<span class='k'>done</span>
+</code></pre>
+</div>
 <p>The speed difference between these two is noticeable and significant.</p>
+<div class='highlight'><pre><code class='console'><span class='gp'>$</span> <span class='k'>for </span>i in variable subshell; <span class='k'>do</span>
+<span class='gp'>&gt;</span><span class='k'> </span><span class='nb'>echo</span> -e <span class='s2'>&quot;\n$i&quot;</span>; <span class='nb'>time</span> ./<span class='nv'>$i</span> &gt; /dev/null
+<span class='gp'>&gt;</span> <span class='k'>done</span>
 
+<span class='go'>variable</span>
+
+<span class='go'>real 0m0.367s</span>
+<span class='go'>user 0m0.346s</span>
+<span class='go'>sys 0m0.015s</span>
+
+<span class='go'>subshell</span>
+
+<span class='go'>real 0m11.937s</span>
+<span class='go'>user 0m3.121s</span>
+<span class='go'>sys 0m0.359s</span>
+</code></pre>
+</div>
 <p>As you can see, when using <code>variable</code>, execution takes 0.367 seconds. <code>subshell</code> however takes a full 11.937 seconds!</p></div>
 
 <!-- Disqus comment engine -->

@@ -76,7 +76,14 @@
   -o, --mntonname=DIR          Directory on which mounted
   -f, --mntfromname=NAME       Mounted filesystem</code></pre>
 
-<p>With this program, determining if something is mounted in a script is as simple as</p></div>
+<p>With this program, determining if something is mounted in a script is as simple as</p>
+<div class='highlight'><pre><code class='bash'><span class='k'>if </span>getmntinfo -t hfs -o / -f /dev/disk0s2 -q; <span class='k'>then</span>
+<span class='k'>	</span><span class='nb'>echo</span> <span class='s2'>&quot;Mounted&quot;</span>
+<span class='k'>else</span>
+<span class='k'>	</span><span class='nb'>echo</span> <span class='s2'>&quot;Not Mounted&quot;</span>
+<span class='k'>fi</span>
+</code></pre>
+</div></div>
 
 <!-- Disqus comment engine -->
 <div id="disqus">

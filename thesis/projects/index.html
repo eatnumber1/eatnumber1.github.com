@@ -62,7 +62,17 @@
 <p>It can be determined that some non-deterministic variables will &#8220;probably&#8221; take a value. Assuming a finite set of probable values, an optimizing compiler can create multiple code paths, assuming one of those probable values for each code path.</p>
 
 <p>The following code would become optimizable if my proposed changes were introduced.</p>
-
+<div class='highlight'><pre><code class='c'><span class='kt'>int</span> <span class='nf'>main</span><span class='p'>(</span> <span class='kt'>int</span> <span class='n'>argc</span><span class='p'>,</span> <span class='kt'>char</span> <span class='o'>*</span><span class='n'>argv</span><span class='p'>[]</span> <span class='p'>)</span> <span class='p'>{</span>
+	<span class='k'>if</span><span class='p'>(</span> <span class='n'>atoi</span><span class='p'>(</span><span class='n'>argv</span><span class='p'>[</span><span class='mi'>1</span><span class='p'>])</span> <span class='p'>)</span> <span class='p'>{</span>
+		<span class='c1'>// Do something interesting knowing that the user specified true on the</span>
+		<span class='c1'>// command line.</span>
+	<span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
+		<span class='c1'>// Do something interesting knowing that the user specified false on the</span>
+		<span class='c1'>// command line.</span>
+	<span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
 <h1 id='reclaimable_anonymous_cache_memory_in_linux'>Reclaimable anonymous cache memory in Linux</h1>
 
 <p>There are many programs today which generate &#8220;cached&#8221; values, which while regeneratable, are expensive to do. When the system is memory constrained however, it is frequently desirable to dump those caches so execution may continue. I would like to add a facility to Linux whereby specific memory regions may be marked as &#8220;reclaimable,&#8221; allowing the kernel to reclaim and reuse that memory when under heavy load.</p>

@@ -54,7 +54,35 @@
 
 <p>This is an undocumented <abbr title='Application Programming Interface'>API</abbr> by Google, and notably cannot use <abbr title='JavaScript Object Notation'>JSON</abbr>P. That means that I couldn&#8217;t use that <abbr title='Uniform Resource Locator'>URL</abbr> directly from within my static-page <abbr title='A blog-aware, static site generator in Ruby'>Jekyll</abbr>-generated website thanks to the <a href='http://en.wikipedia.org/wiki/Same-origin_policy'>same origin policy</a>.</p>
 
-<p>In order to work around this rather severe limitation, I leveraged the power of <a href='http://en.wikipedia.org/wiki/Yahoo!_query_language'><abbr title='Yahoo! query language'>YQL</abbr></a>, which is able to effectively turn a <abbr title='JavaScript Object Notation'>JSON</abbr>-only data source into a JSONP data source. At the end of the day, I&#8217;m able to retrieve my current location from Latitude by going through Yahoo with the following code:</p></div>
+<p>In order to work around this rather severe limitation, I leveraged the power of <a href='http://en.wikipedia.org/wiki/Yahoo!_query_language'><abbr title='Yahoo! query language'>YQL</abbr></a>, which is able to effectively turn a <abbr title='JavaScript Object Notation'>JSON</abbr>-only data source into a JSONP data source. At the end of the day, I&#8217;m able to retrieve my current location from Latitude by going through Yahoo with the following code:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>function</span> <span class='nx'>doLatitude</span><span class='p'>(</span> <span class='nx'>id</span><span class='p'>,</span> <span class='nx'>elem</span> <span class='p'>)</span> <span class='p'>{</span>
+  <span class='kd'>var</span> <span class='nx'>url</span> <span class='o'>=</span> <span class='s2'>&quot;http://www.google.com/latitude/apps/badge/api&quot;</span><span class='p'>;</span>
+  <span class='kd'>var</span> <span class='nx'>data</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>.</span><span class='nx'>param</span><span class='p'>({</span>
+    <span class='nx'>user</span><span class='o'>:</span> <span class='nx'>id</span><span class='p'>,</span>
+    <span class='nx'>type</span><span class='o'>:</span> <span class='s2'>&quot;json&quot;</span>
+  <span class='p'>});</span>
+  <span class='kd'>var</span> <span class='nx'>full_url</span> <span class='o'>=</span> <span class='nx'>url</span> <span class='o'>+</span> <span class='s2'>&quot;?&quot;</span> <span class='o'>+</span> <span class='nx'>data</span><span class='p'>;</span>
+  <span class='nx'>$</span><span class='p'>.</span><span class='nx'>ajax</span><span class='p'>({</span>
+    <span class='nx'>url</span><span class='o'>:</span> <span class='s2'>&quot;http://query.yahooapis.com/v1/public/yql&quot;</span><span class='p'>,</span>
+    <span class='nx'>dataType</span><span class='o'>:</span> <span class='s2'>&quot;jsonp&quot;</span><span class='p'>,</span>
+    <span class='nx'>data</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='nx'>q</span><span class='o'>:</span> <span class='s2'>&quot;SELECT * FROM json WHERE url=&#39;&quot;</span> <span class='o'>+</span> <span class='nx'>full_url</span> <span class='o'>+</span> <span class='s2'>&quot;&#39;&quot;</span><span class='p'>,</span>
+      <span class='nx'>format</span><span class='o'>:</span> <span class='s2'>&quot;json&quot;</span>
+    <span class='p'>},</span>
+    <span class='nx'>success</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span> <span class='nx'>data</span> <span class='p'>)</span> <span class='p'>{</span>
+      <span class='k'>if</span><span class='p'>(</span> <span class='nx'>data</span><span class='p'>.</span><span class='nx'>query</span><span class='p'>.</span><span class='nx'>results</span><span class='p'>.</span><span class='nx'>json</span><span class='p'>.</span><span class='nx'>features</span> <span class='o'>==</span> <span class='kc'>null</span> <span class='p'>)</span> <span class='p'>{</span>
+        <span class='nx'>elem</span><span class='p'>.</span><span class='nx'>html</span><span class='p'>(</span><span class='s2'>&quot;&lt;span style=\&quot;font-style:italic\&quot;&gt;location unavailable&lt;/span&gt;&quot;</span><span class='p'>);</span>
+      <span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
+        <span class='nx'>elem</span><span class='p'>.</span><span class='nx'>html</span><span class='p'>(</span><span class='nx'>data</span><span class='p'>.</span><span class='nx'>query</span><span class='p'>.</span><span class='nx'>results</span><span class='p'>.</span><span class='nx'>json</span><span class='p'>.</span><span class='nx'>features</span><span class='p'>.</span><span class='nx'>properties</span><span class='p'>.</span><span class='nx'>reverseGeocode</span><span class='p'>);</span>
+      <span class='p'>}</span>
+    <span class='p'>},</span>
+    <span class='nx'>error</span><span class='o'>:</span> <span class='kd'>function</span><span class='p'>(</span> <span class='nx'>_</span><span class='p'>,</span> <span class='nx'>textStatus</span><span class='p'>,</span> <span class='nx'>errorThrown</span> <span class='p'>)</span> <span class='p'>{</span>
+        <span class='nx'>elem</span><span class='p'>.</span><span class='nx'>replaceWith</span><span class='p'>(</span><span class='nx'>textStatus</span> <span class='o'>+</span> <span class='s2'>&quot;: &quot;</span> <span class='o'>+</span> <span class='nx'>errorThrown</span><span class='p'>);</span>
+    <span class='p'>}</span>
+  <span class='p'>});</span>
+<span class='p'>}</span>
+</code></pre>
+</div></div>
 
 <!-- Disqus comment engine -->
 <div id="disqus">

@@ -47,12 +47,33 @@
 	</h1>
 </div>
 <div id="page"><p>So just to see if I could, I wrote a version of cat using pure bash. Pure bash is a bash script which uses nothing but bash builtins to accomplish it&#8217;s goal. To determine if a particular command is a builtin, you can use the command type -t &#8220;command&#8221; (the command type, is itself a builtin). Some notable commands which are builtins include echo, read, exec, return. Some notable commands which are not builtins include cat and grep. As follows is my implementation of cat in pure bash.</p>
-
+<div class='highlight'><pre><code class='bash'><span class='lineno'> 1</span> <span class='c'>#!/bin/bash</span>
+<span class='lineno'> 2</span> <span class='nv'>INPUTS</span><span class='o'>=(</span> <span class='s2'>&quot;${@:-&quot;</span>-<span class='s2'>&quot;}&quot;</span> <span class='o'>)</span>
+<span class='lineno'> 3</span> <span class='k'>for </span>i in <span class='s2'>&quot;${INPUTS[@]}&quot;</span>; <span class='k'>do</span>
+<span class='lineno'> 4</span> <span class='k'>	if</span> <span class='o'>[[</span> <span class='s2'>&quot;$i&quot;</span> !<span class='o'>=</span> <span class='s2'>&quot;-&quot;</span> <span class='o'>]]</span>; <span class='k'>then</span>
+<span class='lineno'> 5</span> <span class='k'>		</span><span class='nb'>exec </span>3&lt; <span class='s2'>&quot;$i&quot;</span> <span class='o'>||</span> <span class='nb'>exit </span>1
+<span class='lineno'> 6</span> 	<span class='k'>else</span>
+<span class='lineno'> 7</span> <span class='k'>		</span><span class='nb'>exec </span>3&lt;&amp;0
+<span class='lineno'> 8</span> 	<span class='k'>fi</span>
+<span class='lineno'> 9</span> <span class='k'>	while </span><span class='nb'>read</span> -ru 3; <span class='k'>do</span>
+<span class='lineno'>10</span> <span class='k'>		</span><span class='nb'>echo</span> -E <span class='s2'>&quot;$REPLY&quot;</span>
+<span class='lineno'>11</span> 	<span class='k'>done</span>
+<span class='lineno'>12</span> <span class='k'>done</span>
+</code></pre>
+</div>
 <p>Now, keep reading if you want a small lesson in advanced bash. I&#8217;ll go line by line to explain what this is doing.</p>
-
+<div class='highlight'><pre><code class='bash'><span class='c'>#!/bin/bash</span>
+</code></pre>
+</div>
 <p>Line 1 is the <a href='http://en.wikipedia.org/wiki/Shebang_%28Unix%29'>shebang</a></p>
-
+<div class='highlight'><pre><code class='bash'><span class='nv'>INPUTS</span><span class='o'>=(</span> <span class='s2'>&quot;${@:-&quot;</span>-<span class='s2'>&quot;}&quot;</span> <span class='o'>)</span>
+</code></pre>
+</div>
 <p>Line 2 assigns the array variable INPUTS either the arguments provided on the command line if they exist, or the single character <code>-</code>. The way this happens is as follows: <code>$@</code> is the variable to reference the <em>positional parameters</em> (the arguments to your program). If you have not heard of <code>$*</code>, read <a href='http://bash-hackers.org/wiki/doku.php/scripting/posparams#mass_usage'>this</a>. The way I reference the positional parameters is like <code>${@}</code>. That&#8217;s because the brackets allow me to add a <em>default value</em> to the variable. A <em>default value</em> is the value that the variable will seem to have if the variable is not set. The way to use a <em>default value</em> is with the <code>:-</code>, like so: <code>${@:-&quot;hello&quot;}</code>. So if <code>$@</code> is not set, it will seem to have the value <code>&quot;hello&quot;</code>. You will then notice that is all enclosed in <code>()</code>. That makes an array out of the <em>positional parameters</em> (the first argument to the program becomes the first element in the array, the second argument becomes the second element, etc.).</p>
+
+<p><div class='highlight'><pre><code class='bash'><span class='k'>for </span>i in <span class='s2'>&quot;${INPUTS[@]}&quot;</span>; <span class='k'>do</span>
+</code></pre>
+</div></p>
 
 <p>Line 3 begins a <code>for</code> loop which will assign to <code>i</code> each value stored in the array <code>INPUTS</code> which was discussed earlier. The <code>@</code> index used is the same for arrays as <code>$@</code> is for the <em>positional parameters</em>.</p>
 
