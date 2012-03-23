@@ -63,12 +63,12 @@
 
 <p>The following code would become optimizable if my proposed changes were introduced.</p>
 <div class='highlight'><pre><code class='c'><span class='kt'>int</span> <span class='nf'>main</span><span class='p'>(</span> <span class='kt'>int</span> <span class='n'>argc</span><span class='p'>,</span> <span class='kt'>char</span> <span class='o'>*</span><span class='n'>argv</span><span class='p'>[]</span> <span class='p'>)</span> <span class='p'>{</span>
-	<span class='k'>if</span><span class='p'>(</span> <span class='n'>atoi</span><span class='p'>(</span><span class='n'>argv</span><span class='p'>[</span><span class='mi'>1</span><span class='p'>])</span> <span class='p'>)</span> <span class='p'>{</span>
-		<span class='c1'>// Do something interesting knowing that the user specified true on the</span>
-		<span class='c1'>// command line.</span>
+	<span class='kt'>uint32_t</span> <span class='n'>i</span> <span class='o'>=</span> <span class='n'>atoi</span><span class='p'>(</span><span class='n'>argv</span><span class='p'>[</span><span class='mi'>1</span><span class='p'>]);</span>
+	<span class='k'>if</span><span class='p'>(</span> <span class='n'>i</span> <span class='o'>&lt;</span> <span class='mi'>2</span> <span class='p'>)</span> <span class='p'>{</span>
+		<span class='c1'>// The compiler could create three different code paths for i here; one</span>
+		<span class='c1'>// each for 1, 2 and 3, and then constant inline those values.</span>
 	<span class='p'>}</span> <span class='k'>else</span> <span class='p'>{</span>
-		<span class='c1'>// Do something interesting knowing that the user specified false on the</span>
-		<span class='c1'>// command line.</span>
+		<span class='c1'>// The compiler doesn&#39;t know what the value is.</span>
 	<span class='p'>}</span>
 <span class='p'>}</span>
 </code></pre>
