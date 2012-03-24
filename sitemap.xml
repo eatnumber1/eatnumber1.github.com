@@ -10,7 +10,7 @@
   </url>
   <url>
       <loc>http://rus.har.mn/thesis/</loc>
-      <lastmod>2012-03-22</lastmod>
+      <lastmod>2012-03-23</lastmod>
   </url>
   <url>
       <loc>http://rus.har.mn/machinae/</loc>
@@ -19,6 +19,11 @@
   <url>
       <loc>http://rus.har.mn/machinae/atom.xml</loc>
       <lastmod>2011-12-30</lastmod>
+  </url>
+  <url>
+      <loc>http://rus.har.mn/blog/2012-03-23/week-one</loc>
+      <lastmod>2012-03-23</lastmod>
+      <changefreq>never</changefreq>
   </url>
   <url>
       <loc>http://rus.har.mn/blog/2011-12-13/latitude-public-api</loc>
