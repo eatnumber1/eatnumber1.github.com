@@ -6,7 +6,7 @@
   </url>
   <url>
       <loc>http://rus.har.mn/thesis/projects/</loc>
-      <lastmod>2012-03-24</lastmod>
+      <lastmod>2012-03-28</lastmod>
   </url>
   <url>
       <loc>http://rus.har.mn/thesis/</loc>
@@ -19,6 +19,11 @@
   <url>
       <loc>http://rus.har.mn/machinae/atom.xml</loc>
       <lastmod>2011-12-30</lastmod>
+  </url>
+  <url>
+      <loc>http://rus.har.mn/blog/2012-03-28/week-two</loc>
+      <lastmod>2012-03-28</lastmod>
+      <changefreq>never</changefreq>
   </url>
   <url>
       <loc>http://rus.har.mn/blog/2012-03-23/week-one</loc>

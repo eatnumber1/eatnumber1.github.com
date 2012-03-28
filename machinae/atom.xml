@@ -4,13 +4,33 @@
  <title>Russell Harmon</title>
  <link href="http://rus.har.mn/atom.xml" rel="self"/>
  <link href="http://rus.har.mn/"/>
- <updated>2012-03-24T03:11:29-04:00</updated>
+ <updated>2012-03-28T17:48:33-04:00</updated>
  <id>http://rus.har.mn/</id>
  <author>
    <name>Russell Harmon</name>
    <email>russ@eatnumber1.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Week Two Progress</title>
+   <link href="http://rus.har.mn/blog/2012-03-28/week-two"/>
+   <updated>2012-03-28T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2012-03-28:/blog/2012-03-28/week-two</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="thesis"/>
+   
+   <content type="html">&lt;h1 id='week_two'&gt;Week Two&lt;/h1&gt;
+&lt;div class='maruku_toc'&gt;&lt;ul style='list-style: none;'&gt;&lt;li&gt;&lt;a href='#week_two'&gt;Week Two&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#lessons_learned_from_chapter_three_style_specifics'&gt;Lessons Learned from Chapter Three: Style Specifics&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#lessons_learned_from_chapter_ten_doing_research_part_two'&gt;Lessons Learned from Chapter Ten: Doing Research, Part Two&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+&lt;h1 id='lessons_learned_from_chapter_three_style_specifics'&gt;Lessons Learned from Chapter Three: Style Specifics&lt;/h1&gt;
+
+&lt;p&gt;Coming soon&amp;#8230;&lt;/p&gt;
+
+&lt;h1 id='lessons_learned_from_chapter_ten_doing_research_part_two'&gt;Lessons Learned from Chapter Ten: Doing Research, Part Two&lt;/h1&gt;
+
+&lt;p&gt;Coming soon&amp;#8230;&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Week One Progress</title>
@@ -22,8 +42,8 @@
    <category scheme="http://rus.har.mn/tag" term="thesis"/>
    
    <content type="html">&lt;h1 id='week_one'&gt;Week One&lt;/h1&gt;
-&lt;div class='maruku_toc'&gt;&lt;ul style='list-style: none;'&gt;&lt;li&gt;&lt;a href='#lessons_learned_from_chapter_2_good_style'&gt;Lessons Learned from Chapter 2: Good Style&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#lessons_learned_from_chapter_10_doing_research_part_1'&gt;Lessons Learned from Chapter 10: Doing Research, Part 1&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#ms_projectthesis_topics'&gt;MS Project/Thesis Topics&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
-&lt;h2 id='lessons_learned_from_chapter_2_good_style'&gt;Lessons Learned from Chapter 2: Good Style&lt;/h2&gt;
+&lt;div class='maruku_toc'&gt;&lt;ul style='list-style: none;'&gt;&lt;li&gt;&lt;a href='#lessons_learned_from_chapter_two_good_style'&gt;Lessons Learned from Chapter Two: Good Style&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#lessons_learned_from_chapter_ten_doing_research_part_1'&gt;Lessons Learned from Chapter Ten: Doing Research, Part 1&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#ms_projectthesis_topics'&gt;MS Project/Thesis Topics&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;
+&lt;h2 id='lessons_learned_from_chapter_two_good_style'&gt;Lessons Learned from Chapter Two: Good Style&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Science writing does not have to be dull.&lt;/li&gt;
@@ -47,7 +67,7 @@
 &lt;li&gt;Be specific; not being so can imply ulterior motives or inferior understanding.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id='lessons_learned_from_chapter_10_doing_research_part_1'&gt;Lessons Learned from Chapter 10: Doing Research, Part 1&lt;/h2&gt;
+&lt;h2 id='lessons_learned_from_chapter_ten_doing_research_part_1'&gt;Lessons Learned from Chapter Ten: Doing Research, Part 1&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;A paper is only a tiny window into your research.&lt;/li&gt;
