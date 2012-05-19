@@ -4,13 +4,59 @@
  <title>Russell Harmon</title>
  <link href="http://rus.har.mn/atom.xml" rel="self"/>
  <link href="http://rus.har.mn/"/>
- <updated>2012-04-12T18:06:51-04:00</updated>
+ <updated>2012-05-18T22:46:41-04:00</updated>
  <id>http://rus.har.mn/</id>
  <author>
    <name>Russell Harmon</name>
    <email>russ@eatnumber1.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Designing Robust Build Systems</title>
+   <link href="http://rus.har.mn/blog/2012-05-18/designing-robust-build-systems"/>
+   <updated>2012-05-18T00:00:00-04:00</updated>
+   <!-- RFC 4151 compliant tag -->
+   <id>tag:rus.har.mn,2012-05-18:/blog/2012-05-18/designing-robust-build-systems</id>
+   
+   <category scheme="http://rus.har.mn/tag" term="machinae"/>
+   
+   <content type="html">&lt;p&gt;A few years ago, I took a hard look at the current state of the art of build systems. The ones I looked at were the ones that I had heard of, specifically &lt;a href='http://dev/null'&gt;&lt;abbr title='A utility that automatically builds executable programs and libraries from source code by reading files called makefiles which specify how to derive the target program.'&gt;Make&lt;/abbr&gt;&lt;/a&gt;, &lt;a href='http://dev/null'&gt;SCons&lt;/a&gt;, &lt;a href='http://dev/null'&gt;C&lt;abbr title='A utility that automatically builds executable programs and libraries from source code by reading files called makefiles which specify how to derive the target program.'&gt;Make&lt;/abbr&gt;&lt;/a&gt;, &lt;a href='http://dev/null'&gt;Jam&lt;/a&gt;, TODO. I slowly came to the realization every build system designer since the creators of &lt;abbr title='A utility that automatically builds executable programs and libraries from source code by reading files called makefiles which specify how to derive the target program.'&gt;Make&lt;/abbr&gt; (which arguably does it right) have been thinking about building software all wrong.&lt;/p&gt;
+
+&lt;p&gt;Understand that the entire purpose of a build system is to compile your complex piece of software &lt;em&gt;correctly every time&lt;/em&gt;. Peter Miller discusses the importance of a correct build system in his paper &lt;a href='http://aegis.sourceforge.net/auug97.pdf'&gt;Recursive &lt;abbr title='A utility that automatically builds executable programs and libraries from source code by reading files called makefiles which specify how to derive the target program.'&gt;Make&lt;/abbr&gt; Considered Harmful&lt;/a&gt;. In order to build correctly always, the system must fully understand the &lt;em&gt;dependency tree&lt;/em&gt; of the software. This dependency tree is, composed in part by any &lt;code&gt;#include&lt;/code&gt; directives in your C files. For example, lets say we&amp;#8217;re making a simple game, with a dependency tree like the following:&lt;/p&gt;
+&lt;!-- TODO: Don't use &lt;center&gt; --&gt;&lt;center&gt;
+Liquid error: undefined method `join' for nil:NilClass
+&lt;/center&gt;
+&lt;p&gt;This means that before &lt;code&gt;game.c&lt;/code&gt; can be built, &lt;code&gt;common.h&lt;/code&gt; and &lt;code&gt;player.h&lt;/code&gt; must exist, and before &lt;code&gt;game.exe&lt;/code&gt; can be built, &lt;code&gt;game.c&lt;/code&gt; must exist. Additionally, &lt;code&gt;game.exe&lt;/code&gt; can be said to &lt;em&gt;transitively depend&lt;/em&gt; upon &lt;code&gt;common.h&lt;/code&gt; and &lt;code&gt;player.h&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, this works fine always because you wrote &lt;code&gt;common.h&lt;/code&gt;, &lt;code&gt;player.h&lt;/code&gt; and &lt;code&gt;game.c&lt;/code&gt;, but lets say you were writing a game, and wanted to create a domain-specific language to express the levels. This &lt;abbr title='Domain specific language'&gt;DSL&lt;/abbr&gt;&amp;#8217;s compiler would output C code, which would then be used from within your code. This can be expressed like so:&lt;/p&gt;
+&lt;center&gt;
+Liquid error: undefined method `join' for nil:NilClass
+&lt;/center&gt;
+&lt;p&gt;The dependencies &lt;code&gt;common.h → levels.c&lt;/code&gt; and &lt;code&gt;player.h → levels.c&lt;/code&gt; is not detected in this case unless you explicitly write that dependency into your build system. That is undesirable however as doing so is fragile. What you really want, is to &lt;em&gt;dynamically&lt;/em&gt; introduce dependencies into the build system. In other words, in order for a build system to be &lt;em&gt;correct&lt;/em&gt;, it sometimes must be able to detect dependencies while it&amp;#8217;s traversing the dependency tree it is detecting dependencies for!&lt;/p&gt;
+
+&lt;p&gt;&lt;abbr title='GNU Compiler Collection'&gt;GCC&lt;/abbr&gt; provides a facility for outputting a &lt;abbr title='A utility that automatically builds executable programs and libraries from source code by reading files called makefiles which specify how to derive the target program.'&gt;Make&lt;/abbr&gt; compatible list of a file&amp;#8217;s dependencies with the &lt;code&gt;-M&lt;/code&gt; option. From &lt;abbr title='GNU Compiler Collection'&gt;GCC&lt;/abbr&gt;&amp;#8217;s &lt;a href='http://gcc.gnu.org/onlinedocs/cpp/Invocation.html#index-M-141'&gt;docs&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;-M
+	Instead of outputting the result of preprocessing, output a rule
+	suitable for make describing the dependencies of the main source file.&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;GNU &lt;abbr title='A utility that automatically builds executable programs and libraries from source code by reading files called makefiles which specify how to derive the target program.'&gt;Make&lt;/abbr&gt; has introduced the &lt;code&gt;include&lt;/code&gt; extension that allows you to generate and include these files, albeit in a more limited fashion. From the &lt;a href='http://www.gnu.org/software/make/manual/html_node/Remaking-Makefiles.html#Remaking-Makefiles'&gt;include&lt;/a&gt; directive&amp;#8217;s documentation:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;After reading in all makefiles, make will consider each as a goal target and
+attempt to update it. If a makefile has a rule which says how to update it
+(found either in that very makefile or in another one) or if an implicit
+rule applies to it (see Using Implicit Rules), it will be updated if
+necessary. After all makefiles have been checked, if any have actually been
+changed, make starts with a clean slate and reads all the makefiles over
+again.&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This mechanism can be leveraged to create a limited solution to the &lt;em&gt;traversal-time dependency detection&lt;/em&gt; problem, which our game suffered from. Unfortunately, this works only for a single &amp;#8220;level&amp;#8221; of traversal-time dependency detection. E.g. the following does not work:&lt;/p&gt;
+&lt;center&gt;
+Liquid error: undefined method `join' for nil:NilClass
+&lt;/center&gt;
+&lt;p&gt;I&amp;#8217;ve built a functional build system for &lt;abbr title='A single-player roguelike video game originally released in 1987.'&gt;Nethack&lt;/abbr&gt; which leverages these concepts. You can see an abbreviated dependency graph for Nethack &lt;a href='/files/nethack-dependencies.pdf'&gt;here&lt;/a&gt;, and I also gave a presentation on the &lt;abbr title='A single-player roguelike video game originally released in 1987.'&gt;Nethack&lt;/abbr&gt; build system which can be seen &lt;a href='http://prezi.com/vzxavg014qlf/nethack-compilation/'&gt;here&lt;/a&gt;. The build system itself is hosted &lt;a href='https://github.com/ComputerScienceHouse/bingehack'&gt;here&lt;/a&gt;.&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Week Two Progress</title>
