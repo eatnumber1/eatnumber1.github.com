@@ -4,7 +4,7 @@
  <title>Russell Harmon</title>
  <link href="http://rus.har.mn/atom.xml" rel="self"/>
  <link href="http://rus.har.mn/"/>
- <updated>2012-05-20T04:41:26-04:00</updated>
+ <updated>2012-09-01T09:30:08-07:00</updated>
  <id>http://rus.har.mn/</id>
  <author>
    <name>Russell Harmon</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>Designing Robust Build Systems</title>
    <link href="http://rus.har.mn/blog/2012-05-18/designing-robust-build-systems"/>
-   <updated>2012-05-18T00:00:00-04:00</updated>
+   <updated>2012-05-18T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2012-05-18:/blog/2012-05-18/designing-robust-build-systems</id>
    
@@ -268,7 +268,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Week Two Progress</title>
    <link href="http://rus.har.mn/blog/2012-03-28/week-two"/>
-   <updated>2012-03-28T00:00:00-04:00</updated>
+   <updated>2012-03-28T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2012-03-28:/blog/2012-03-28/week-two</id>
    
@@ -324,7 +324,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Week One Progress</title>
    <link href="http://rus.har.mn/blog/2012-03-23/week-one"/>
-   <updated>2012-03-23T00:00:00-04:00</updated>
+   <updated>2012-03-23T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2012-03-23:/blog/2012-03-23/week-one</id>
    
@@ -390,7 +390,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Getting Public Information From Latitude</title>
    <link href="http://rus.har.mn/blog/2011-12-13/latitude-public-api"/>
-   <updated>2011-12-13T00:00:00-05:00</updated>
+   <updated>2011-12-13T00:00:00-08:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2011-12-13:/blog/2011-12-13/latitude-public-api</id>
    
@@ -438,7 +438,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Determining Mount Status</title>
    <link href="http://rus.har.mn/blog/2011-06-24/getmntinfo"/>
-   <updated>2011-06-24T00:00:00-04:00</updated>
+   <updated>2011-06-24T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2011-06-24:/blog/2011-06-24/getmntinfo</id>
    
@@ -487,7 +487,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Jekyll at Barcamp</title>
    <link href="http://rus.har.mn/blog/2011-02-19/jekyll-at-barcamp"/>
-   <updated>2011-02-19T00:00:00-05:00</updated>
+   <updated>2011-02-19T00:00:00-08:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2011-02-19:/blog/2011-02-19/jekyll-at-barcamp</id>
    
@@ -506,7 +506,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>New Blog</title>
    <link href="http://rus.har.mn/blog/2011-02-06/new-blog"/>
-   <updated>2011-02-06T00:00:00-05:00</updated>
+   <updated>2011-02-06T00:00:00-08:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2011-02-06:/blog/2011-02-06/new-blog</id>
    
@@ -520,7 +520,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Object Oriented C</title>
    <link href="http://rus.har.mn/blog/2010-10-01/object-oriented-c"/>
-   <updated>2010-10-01T00:00:00-04:00</updated>
+   <updated>2010-10-01T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2010-10-01:/blog/2010-10-01/object-oriented-c</id>
    
@@ -545,7 +545,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Bash Scripters: Stop using subshells to call functions.</title>
    <link href="http://rus.har.mn/blog/2010-07-05/subshells"/>
-   <updated>2010-07-05T00:00:00-04:00</updated>
+   <updated>2010-07-05T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2010-07-05:/blog/2010-07-05/subshells</id>
    
@@ -602,7 +602,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Reclaimable Userspace Cache Memory</title>
    <link href="http://rus.har.mn/blog/2010-05-24/reclaimable-userspace-cache"/>
-   <updated>2010-05-24T00:00:00-04:00</updated>
+   <updated>2010-05-24T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2010-05-24:/blog/2010-05-24/reclaimable-userspace-cache</id>
    
@@ -629,7 +629,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Pure Bash Cat</title>
    <link href="http://rus.har.mn/blog/2009-05-28/pure-bash-cat"/>
-   <updated>2009-05-28T00:00:00-04:00</updated>
+   <updated>2009-05-28T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2009-05-28:/blog/2009-05-28/pure-bash-cat</id>
    
@@ -672,7 +672,7 @@ again.&lt;/code&gt;&lt;/pre&gt;
  <entry>
    <title>Negative Indexed Arrays</title>
    <link href="http://rus.har.mn/blog/2008-08-14/negative-indexed-arrays"/>
-   <updated>2008-08-14T00:00:00-04:00</updated>
+   <updated>2008-08-14T00:00:00-07:00</updated>
    <!-- RFC 4151 compliant tag -->
    <id>tag:rus.har.mn,2008-08-14:/blog/2008-08-14/negative-indexed-arrays</id>
    
