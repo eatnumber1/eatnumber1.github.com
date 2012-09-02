@@ -1,7 +1,7 @@
 function github_latest( count, username, elem, excludes ) {
 	var id_idx = 0, argmap = {};
 	$.yql(
-		"SELECT json.name, json.url, json.description, json.pushed_at FROM json WHERE url=@url" +
+		"SELECT json.name, json.html_url, json.description, json.pushed_at FROM json WHERE url=@url" +
 		excludes.map(function( elem, idx ) {
 			var ret = "", argname = "name" + id_idx++;
 			if( idx == 0 ) ret += " AND json.name NOT IN ( ";
@@ -23,7 +23,7 @@ function github_latest( count, username, elem, excludes ) {
 				if( excludes.indexOf(d.name) != -1 ) return;
 				$("<li/>")
 					.append(
-						$("<a/>", { href: d.url })
+						$("<a/>", { href: d.html_url })
 							.append(d.name)
 					).append(": " + d.description)
 					.appendTo(list);
