@@ -2,7 +2,7 @@
 <span class='k'>function </span>a<span class='o'>()</span> <span class='o'>{</span>
     <span class='nb'>echo </span>hello
 <span class='o'>}</span>
-<span class='k'>for</span> <span class='o'>((</span> <span class='nv'>i</span> <span class='o'>=</span> 0; i %MINIFYHTML1346792974%5% 10000; i++ <span class='o'>))</span>; <span class='k'>do</span>
+<span class='k'>for</span> <span class='o'>((</span> <span class='nv'>i</span> <span class='o'>=</span> 0; i %MINIFYHTML1346793322%5% 10000; i++ <span class='o'>))</span>; <span class='k'>do</span>
 <span class='k'>    </span><span class='nb'>echo</span> <span class='s2'>"$(a)"</span>
 <span class='k'>done</span>
 </code></pre>
@@ -10,14 +10,14 @@
 <span class='k'>function </span>a<span class='o'>()</span> <span class='o'>{</span>
     <span class='nv'>retval</span><span class='o'>=</span><span class='s2'>"hello"</span>
 <span class='o'>}</span>
-<span class='k'>for</span> <span class='o'>((</span> <span class='nv'>i</span> <span class='o'>=</span> 0; i %MINIFYHTML1346792974%6% 10000; i++ <span class='o'>))</span>; <span class='k'>do</span>
+<span class='k'>for</span> <span class='o'>((</span> <span class='nv'>i</span> <span class='o'>=</span> 0; i %MINIFYHTML1346793322%6% 10000; i++ <span class='o'>))</span>; <span class='k'>do</span>
 <span class='k'>    </span>a
     <span class='nb'>echo</span> <span class='s2'>"$retval"</span>
 <span class='k'>done</span>
 </code></pre>
 </div><p>The speed difference between these two is noticeable and significant.</p><div class='highlight'><pre><code class='console'><span class='gp'>$</span> <span class='k'>for </span>i in variable subshell; <span class='k'>do</span>
-<span class='gp'>%MINIFYHTML1346792974%7%</span><span class='k'> </span><span class='nb'>echo</span> -e <span class='s2'>"\n$i"</span>; <span class='nb'>time</span> ./<span class='nv'>$i</span> %MINIFYHTML1346792974%8% /dev/null
-<span class='gp'>%MINIFYHTML1346792974%9%</span> <span class='k'>done</span>
+<span class='gp'>%MINIFYHTML1346793322%7%</span><span class='k'> </span><span class='nb'>echo</span> -e <span class='s2'>"\n$i"</span>; <span class='nb'>time</span> ./<span class='nv'>$i</span> %MINIFYHTML1346793322%8% /dev/null
+<span class='gp'>%MINIFYHTML1346793322%9%</span> <span class='k'>done</span>
 <span class='go'>variable</span>
 <span class='go'>real 0m0.367s</span>
 <span class='go'>user 0m0.346s</span>
