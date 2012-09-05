@@ -2,9 +2,9 @@
 <span class='lineno'> 2</span> <span class='nv'>INPUTS</span><span class='o'>=(</span> <span class='s2'>"${@:-"</span>-<span class='s2'>"}"</span> <span class='o'>)</span>
 <span class='lineno'> 3</span> <span class='k'>for </span>i in <span class='s2'>"${INPUTS[@]}"</span>; <span class='k'>do</span>
 <span class='lineno'> 4</span> <span class='k'>	if</span> <span class='o'>[[</span> <span class='s2'>"$i"</span> !<span class='o'>=</span> <span class='s2'>"-"</span> <span class='o'>]]</span>; <span class='k'>then</span>
-<span class='lineno'> 5</span> <span class='k'>		</span><span class='nb'>exec </span>3%MINIFYHTML1346793322%5% <span class='s2'>"$i"</span> <span class='o'>||</span> <span class='nb'>exit </span>1
+<span class='lineno'> 5</span> <span class='k'>		</span><span class='nb'>exec </span>3%MINIFYHTML1346829579%5% <span class='s2'>"$i"</span> <span class='o'>||</span> <span class='nb'>exit </span>1
 <span class='lineno'> 6</span> 	<span class='k'>else</span>
-<span class='lineno'> 7</span> <span class='k'>		</span><span class='nb'>exec </span>3%MINIFYHTML1346793322%6%%MINIFYHTML1346793322%7%0
+<span class='lineno'> 7</span> <span class='k'>		</span><span class='nb'>exec </span>3%MINIFYHTML1346829579%6%%MINIFYHTML1346829579%7%0
 <span class='lineno'> 8</span> 	<span class='k'>fi</span>
 <span class='lineno'> 9</span> <span class='k'>	while </span><span class='nb'>read</span> -ru 3; <span class='k'>do</span>
 <span class='lineno'>10</span> <span class='k'>		</span><span class='nb'>echo</span> -E <span class='s2'>"$REPLY"</span>
